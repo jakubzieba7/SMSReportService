@@ -9,7 +9,7 @@ namespace SMSReportService.Repositories
 {
     public class ErrorRepository
     {
-        public List<Error> GetLastErrors(int intervalInMinutes)
+        public List<Error> GetLastErrors()
         {
             return new List<Error>
             {

@@ -56,11 +56,11 @@ namespace SMSReportService
             try
             {
                 var numbersToMessage = new List<string>
-            {
-                System.Configuration.ConfigurationManager.AppSettings["ToPhoneNumber"],
-                //"+14158141829",
-                //"+15017122661"
-            };
+                {
+                    System.Configuration.ConfigurationManager.AppSettings["ToPhoneNumber"],
+                    //"+14158141829",
+                    //"+15017122661"
+                };
 
                 foreach (var number in numbersToMessage)
                 {
