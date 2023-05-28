@@ -11,17 +11,18 @@ namespace SMSReportService
     public partial class SMSReportService : ServiceBase
     {
 
-        private Timer _timer;
-        private ErrorRepository _errorRepository = new ErrorRepository();
+        private readonly Timer _timer;
+        private readonly ErrorRepository _errorRepository = new ErrorRepository();
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly GenerateSMSContent _generateSMSContent = new GenerateSMSContent();
 
-        private int _intervalInMinutes;
-        private int _sendHour;
-        private bool _ifSendReport;
-        private string _fromPhoneNumber;
-        private string _toPhoneNumber;
-        private string _accountSID;
-        private string _authToken;
+        private readonly int _intervalInMinutes;
+        private readonly int _sendHour;
+        private readonly bool _ifSendReport;
+        private readonly string _fromPhoneNumber;
+        private readonly string _toPhoneNumber;
+        private readonly string _accountSID;
+        private readonly string _authToken;
 
         public SMSReportService()
         {
@@ -45,8 +46,6 @@ namespace SMSReportService
             }
         }
 
-
-
         protected override void OnStart(string[] args)
         {
             _timer.Elapsed += DoWork;
@@ -65,6 +64,7 @@ namespace SMSReportService
             if (errors == null || !errors.Any())
                 return;
 
+            _generateSMSContent.SendSMS(errors);
 
             Logger.Info("Error sent...");
         }
