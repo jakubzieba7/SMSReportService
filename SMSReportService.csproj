@@ -138,9 +138,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cypher\Cypher.csproj">
-      <Project>{FA3E72CB-ED8B-435C-8402-93D4694DE0E6}</Project>
-      <Name>Cypher</Name>
+    <ProjectReference Include="..\CypherNew\CypherNew.csproj">
+      <Project>{33D4C8A3-85A7-4CD5-8E04-AA1E2252B6F3}</Project>
+      <Name>CypherNew</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

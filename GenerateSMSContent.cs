@@ -3,6 +3,7 @@ using SMSReportService.Models.Domains;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
@@ -11,7 +12,8 @@ namespace SMSReportService
 {
     public class GenerateSMSContent
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private string _twilioMessageResource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TwilioMessageResourcePath.txt");
 
         public void SendSMS(List<Error> errors)
         {
@@ -41,6 +43,7 @@ namespace SMSReportService
                         to: new Twilio.Types.PhoneNumber(number)
                     );
 
+                    File.WriteAllText(_twilioMessageResource, message.Sid);
                 }
             }
             catch (Exception ex)
@@ -63,7 +66,7 @@ namespace SMSReportService
 
             foreach (var error in errors)
             {
-                smsContent +=$@"{error.Message}+{Environment.NewLine}+{error.Date.ToString("dd-MM-yyyy HH:mm")}";
+                smsContent += $@"{error.Message}{Environment.NewLine}{error.Date.ToString("dd-MM-yyyy HH:mm")}{Environment.NewLine}";
             }
 
             return smsContent;
