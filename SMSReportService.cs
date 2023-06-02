@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
-using CypherNew;
 
 namespace SMSReportService
 {
@@ -13,16 +12,10 @@ namespace SMSReportService
 
         private Timer _timer;
         private ErrorRepository _errorRepository = new ErrorRepository();
-        private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private GenerateSMSContent _generateSMSContent = new GenerateSMSContent();
-
+        private NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly int _intervalInMinutes;
         private readonly int _sendHour;
         private readonly bool _ifSendReport;
-        private readonly string _fromPhoneNumber;
-        private readonly string _toPhoneNumber;
-        private readonly string _accountSID;
-        private readonly string _authToken;
 
         public SMSReportService()
         {
@@ -34,10 +27,7 @@ namespace SMSReportService
                 _sendHour = Convert.ToInt32(ConfigurationManager.AppSettings["SendHour"]);
                 _ifSendReport = Convert.ToBoolean(ConfigurationManager.AppSettings["IfSendReport"]);
                 _timer = new Timer(_intervalInMinutes * 60000);
-                _fromPhoneNumber = DecryptCredentials.DecryptFromPhoneNumber();
-                _toPhoneNumber = DecryptCredentials.DecryptToPhoneNumber();
-                _accountSID = DecryptCredentials.DecryptAccountSID();
-                _authToken = DecryptCredentials.DecryptAuthToken();
+                
             }
             catch (Exception ex)
             {
@@ -64,7 +54,7 @@ namespace SMSReportService
             if (errors == null || !errors.Any())
                 return;
 
-            _generateSMSContent.SendSMS(errors);
+            GenerateSMSContent.SendSMS(errors);
 
             Logger.Info("Error sent...");
         }

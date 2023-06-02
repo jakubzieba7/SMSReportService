@@ -1,15 +1,7 @@
-﻿using NLog;
-using NLog.Internal;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration.Install;
-using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
 
 namespace SMSReportService
 {
