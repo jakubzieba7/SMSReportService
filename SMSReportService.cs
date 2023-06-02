@@ -45,7 +45,11 @@ namespace SMSReportService
 
         private void SendError()
         {
+            if (!_ifSendReport)
+                return;
+
             var actualHour = DateTime.Now.Hour;
+            
             if (actualHour < _sendHour)
                 return;
 
